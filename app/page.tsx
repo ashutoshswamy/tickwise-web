@@ -28,7 +28,7 @@ const promises = [
 
 export default async function Home() {
   const user = await currentUser();
-  if (waitlistOn() && !user) redirect("/waitlist");
+  if (waitlistOn()) redirect("/waitlist");
   return (
     <main>
       {/* HERO: a vermilion field with a fan of matchbook covers, closed off by a striker strip. */}
