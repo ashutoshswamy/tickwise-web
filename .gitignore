@@ -1,0 +1,8 @@
+node_modules
+.next
+*.db*
+.env*
+!.env.example
+*adminsdk*.json
+*.tsbuildinfo
+.DS_Store

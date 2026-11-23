@@ -1,0 +1,17 @@
+# Tickwise
+
+> Tickwise replaces the spinner words shown by Claude Code while it works with short, plain-text sponsor lines. Developers install a VS Code extension and earn per impression. Advertisers pay per 1,000 impressions to reach developers mid-task. Not affiliated with Anthropic.
+
+## Pages
+- [Home](https://tickwise.ashutoshswamy.in/): what Tickwise is, how it works, earnings estimator and FAQ
+- [For developers](https://tickwise.ashutoshswamy.in/developers): how to earn with the extension
+- [For advertisers](https://tickwise.ashutoshswamy.in/advertisers): how to run an ad
+- [Terms of Service](https://tickwise.ashutoshswamy.in/terms)
+- [Privacy Policy](https://tickwise.ashutoshswamy.in/privacy)
+- [Cookie Policy](https://tickwise.ashutoshswamy.in/cookies)
+
+## Key facts
+- Ads are one line of plain text, 48 characters at most, with a required link.
+- Developers earn 70% of what advertisers pay per impression. Payouts start at $10.
+- The extension never reads prompts, code or files. It only notices that Claude Code session files changed.
+- Works with Claude Code in the terminal and in the Claude Code VS Code extension.
