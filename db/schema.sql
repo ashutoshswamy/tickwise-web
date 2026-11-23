@@ -41,3 +41,7 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS payout_details TEXT;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN NOT NULL DEFAULT false;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS terms_accepted_at TIMESTAMPTZ;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS terms_version TEXT;
+CREATE TABLE IF NOT EXISTS waitlist(
+  email TEXT PRIMARY KEY,
+  role TEXT NOT NULL DEFAULT 'developer' CHECK (role IN ('developer','advertiser')),
+  created TIMESTAMPTZ NOT NULL DEFAULT now());

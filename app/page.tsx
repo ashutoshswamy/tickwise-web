@@ -11,6 +11,8 @@ import { Faq } from "@/components/faq";
 import { SiteFooter } from "@/components/site-footer";
 import { JsonLd } from "@/components/json-ld";
 import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { waitlistOn } from "@/lib/waitlist";
 
 const sticks = [
   { t: "Install", d: "Add the Tickwise extension to VS Code and paste your key. It takes under a minute.", Icon: ArrowDownTrayIcon, head: "var(--pine)", drop: "0rem" },
@@ -26,6 +28,7 @@ const promises = [
 
 export default async function Home() {
   const user = await currentUser();
+  if (waitlistOn() && !user) redirect("/waitlist");
   return (
     <main>
       {/* HERO: a vermilion field with a fan of matchbook covers, closed off by a striker strip. */}

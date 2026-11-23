@@ -9,11 +9,13 @@ const COOKIE = "session";
 const MAX_AGE_MS = 1000 * 60 * 60 * 24 * 14; // Firebase session cookies cap at 14 days
 
 // Called by /api/session after the browser signs in with Firebase.
+import { waitlistOn } from "./waitlist";
 export async function createSession(idToken: string, accepted = false) {
   const decoded = await adminAuth().verifyIdToken(idToken);
   if (!decoded.email) throw new Error("account has no email");
   // A brand-new account must come with acceptance of the Terms, Privacy and Cookie policies and the 18+ confirmation.
   const [known] = await sql`SELECT 1 FROM users WHERE uid=${decoded.uid}`;
+  if (!known && waitlistOn()) throw new Error("waitlist");
   if (!known && !accepted) throw new Error("terms");
   await sql`INSERT INTO users(uid,email,api_key,email_verified,terms_accepted_at,terms_version) VALUES(${decoded.uid},${decoded.email},${"tw_" + randomBytes(20).toString("hex")},${decoded.email_verified === true},now(),${LEGAL_VERSION})
             ON CONFLICT (uid) DO UPDATE SET email=EXCLUDED.email, email_verified=EXCLUDED.email_verified`;

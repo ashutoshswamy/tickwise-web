@@ -19,6 +19,7 @@ const msg: Record<string, string> = {
   "auth/unauthorized-domain": "This domain is not authorized in Firebase. Add it under Authentication > Settings > Authorized domains.",
   "auth/operation-not-allowed": "This sign-in method is not enabled in the Firebase console.",
   "app/terms": "There is no account for this login yet. Use Create account and accept the terms first.",
+  "app/waitlist": "Tickwise is invite-only right now. Join the waitlist on the home page.",
   "auth/too-many-requests": "Too many attempts. Wait a minute and try again.",
 };
 
@@ -41,7 +42,10 @@ export default function LoginForm({ next }: { next: string }) {
 
   async function finish(cred: Cred, accepted = false) {
     const r = await fetch("/api/session", { method: "POST", body: JSON.stringify({ idToken: await cred.user.getIdToken(), accepted }) });
-    if (r.status === 403) throw Object.assign(new Error("terms"), { code: "app/terms" });
+    if (r.status === 403) {
+      const j = (await r.json().catch(() => ({}))) as { error?: string };
+      throw Object.assign(new Error(j.error), { code: j.error === "waitlist" ? "app/waitlist" : "app/terms" });
+    }
     if (!r.ok) {
       // Firebase said yes but our server did not: surface why instead of a vague failure.
       const j = (await r.json().catch(() => ({}))) as { detail?: string };
